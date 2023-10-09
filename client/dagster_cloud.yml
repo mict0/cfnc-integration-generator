@@ -1,0 +1,7 @@
+locations:
+  - location_name: client
+    code_source:
+      package_name: client
+    build:
+      directory: projects/client/
+      registry: 783873245484.dkr.ecr.us-east-1.amazonaws.com/client
