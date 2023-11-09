@@ -17,11 +17,32 @@ from client.jobs.tags import cfnc_tags
 from client.src import get_region, get_secrets_config
 
 cfnc_save_applications_in_mongo_job = cfnc_save_applications_in_mongo_graph.to_job(
+    name="cfnc_save_applications_in_mongo_job",
     resource_defs={
         "secrets": secrets_resource.configured(get_secrets_config()),
         "s3": s3_resource.configured(get_region()),
         "mongo": mongodb_resource,
         "cfnc_api": cfnc_api_resource,
+        "webimportapi": webimportapi_resource,
+        "webexportapi": webexportapi_resource,
+        "taskapi": taskapi_resource,
+        "slack": slack_resource,
+        "dynamodb": dynamodb_resource,
+        "sentry": sentry_resource,
+        "values": make_values_resource(**{"start_date": str, "end_date": str}),
+        "io_manager": custom_s3_io_manager,
+    },
+    executor_def=multiprocess_executor,
+    tags=cfnc_tags,
+)
+
+cfnc_save_ccp_applications_in_mongo_job = cfnc_save_applications_in_mongo_graph.to_job(
+    name="cfnc_save_ccp_applications_in_mongo_job",
+    resource_defs={
+        "secrets": secrets_resource.configured(get_secrets_config()),
+        "s3": s3_resource.configured(get_region()),
+        "mongo": mongodb_resource,
+        "cfnc_api": cfnc_ccp_api_resource,
         "webimportapi": webimportapi_resource,
         "webexportapi": webexportapi_resource,
         "taskapi": taskapi_resource,

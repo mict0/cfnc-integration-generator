@@ -1,1 +1,3 @@
-sensors = []
+from .cfnc_transcript_import import cfnc_transcripts_decide_api_to_use_sensor
+
+sensors = [cfnc_transcripts_decide_api_to_use_sensor]
